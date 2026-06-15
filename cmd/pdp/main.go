@@ -15,8 +15,8 @@ import (
 	"github.com/pmsbkhn/zta-core/authz/api"
 	"github.com/pmsbkhn/zta-core/authz/grpcpdp"
 	"github.com/pmsbkhn/zta-core/policystore/bundlestore"
-	"github.com/pmsbkhn/zta-core/services"
 	authzenv1 "github.com/pmsbkhn/zta-core/proto/authzen/v1"
+	"github.com/pmsbkhn/zta-core/services"
 	"google.golang.org/grpc"
 )
 

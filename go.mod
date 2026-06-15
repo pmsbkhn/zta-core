@@ -8,6 +8,7 @@ require (
 	github.com/spiffe/go-spiffe/v2 v2.7.0
 	google.golang.org/grpc v1.81.1
 	google.golang.org/protobuf v1.36.11
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
@@ -54,5 +55,4 @@ require (
 	golang.org/x/text v0.37.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260401024825-9d38bb4040a9 // indirect
 	gopkg.in/ini.v1 v1.67.2 // indirect
-	sigs.k8s.io/yaml v1.6.0 // indirect
 )

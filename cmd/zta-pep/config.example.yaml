@@ -1,0 +1,34 @@
+# Example zta-pep sidecar config. Run: zta-pep -config config.example.yaml
+#
+# Put the sidecar in front of a (possibly non-Go) service: it enforces
+# authorization, then reverse-proxies allowed requests to `upstream`.
+
+listen: ":8080"                 # address the sidecar serves on
+profile: east_west              # edge | east_west | partner
+pep_id: "orders-sidecar"        # identifier surfaced to the PDP
+upstream: "http://127.0.0.1:9000"  # the protected service behind the sidecar
+
+# Demand a verified mTLS peer cert (L0). When true the sidecar serves mTLS using
+# the SVID from SPIRE (SPIFFE_ENDPOINT_SOCKET) or SVID_* env. Typical: true for
+# east_west / partner, false for edge (faces users over plain HTTP/TLS-termination).
+require_peer_svid: true
+
+# PDP transport — set ONE. gRPC-over-mTLS preferred for the internal path.
+pdp:
+  grpc_addr: "pdp:9090"
+  # http_url: "http://pdp:8080"
+
+# Optional: enable the decision-token fast-path (must match the PDP's HS256 secret).
+# token_secret: "change-me"
+
+# Optional: enable the CAEP receiver at POST /events (session revocation push).
+# caep_secret: "change-me"
+
+# Allow-listed routes. A request whose (method, path) matches none is denied at L1.
+# resource_props lift JSON body fields into resource.properties for the policy.
+routes:
+  - method: POST
+    path: /orders
+    action: "orders:create"
+    resource_type: "orders:order"
+    resource_props: [amount, currency]
